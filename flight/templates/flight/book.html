@@ -333,3 +333,168 @@
                                     <option data-countryCode="ZW" value="263">Zimbabwe (+263)</option>
                                 </select>
                             </div>
+                            <div class="col-3 ci">
+                                Mobile No
+                                <input type="text" name="mobile" class="form-control" placeholder="Mobile No" required>
+                            </div>
+                            <div class="col-6 ci">
+                                Email
+                                <input type="email" name="email" class="form-control" placeholder="Email" required>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="send-email">
+                        &nbsp;
+                    </div>
+                </div>
+                <div class="traveller-details individual-traveller-div">
+                    <div class="traveller-head">
+                        <h5>Passenger Details</h5>
+                        <h6><span>0</span> Passengers</h6>
+                    </div>
+                    <hr>
+                    <input type="hidden" id="p-count" name="passengersCount" value="0">
+                    <div class="each-traveller-div">
+                    </div>
+                    <div class="row each-traveller no-traveller">
+                        <div>
+                            <span class="traveller-name"></span>
+                            You have not added any adults to the list
+                        </div>
+                    </div>
+                    <div class="row add-traveller-div collapse" id="collapseExample">
+                        <div class="note-name"><span>IMPORTANT :</span> Enter your name as it is mentioned on your passport or any government approved ID.</div>
+                        <div class="row form-group add-traveller-div-name">
+                            <div class="col">
+                                <input type="text" class="form-control" id="fname" placeholder="First name">
+                            </div>
+                            <div class="col">
+                                <input type="text" class="form-control" id="lname" placeholder="Last name">
+                            </div>
+                        </div>
+                        
+                        <div class="row form-group radio-div">
+                            <div class="form-check-inline cd">
+                                Gender: 
+                            </div>
+                            <div class="form-check-inline">
+                                <label class="form-check-label">
+                                    <input type="radio" class="form-check-input gender" value="male">Male
+                                </label>
+                            </div>
+                            <div class="form-check-inline">
+                                <label class="form-check-label">
+                                    <input type="radio" class="form-check-input gender" value="female">Female
+                                </label>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-primary btn-light" style="margin-right: auto;" onclick="add_traveller()">Add</button>
+                    </div>
+                    <hr>
+                    <div class="add-traveller">
+                        <button class="add-traveller-btn text-uppercase btn"  type="button" data-toggle="collapse" data-target="#collapseExample">+ ADD ADULT</button>
+                    </div>
+                </div>
+                <div class="payment-btn" style="background-color: transparent;">
+                    <button type="submit" class="btn btn-primary btn-danger">Proceed to payment</button>
+                </div>
+                </div>
+                <div class="col-4">
+                    <div class="price-details">
+                        <h5>Fare Summary</h5>
+                        <hr>
+                        <div class="row base-fare">
+                            <div class="base-fae-label">Base Fare: </div>
+                            <div class="base-fare-value">
+                                {% if seat == 'First' %}
+                                    ₹ <span>
+                                        {% if flight2 %}
+                                            {{flight1.first_fare | add:flight2.first_fare}}
+                                        {% else %}
+                                            {{flight1.first_fare}}
+                                        {% endif %}
+                                        </span>
+                                    <input type="hidden" id="basefare" value="{% if flight2 %}{{flight1.first_fare | add:flight2.first_fare}}{% else %}{{flight1.first_fare}}{% endif %}">
+                                {% elif seat == 'Business' %}
+                                    ₹ <span>
+                                        {% if flight2 %}
+                                            {{flight1.business_fare | add:flight2.business_fare}}
+                                        {% else %}
+                                            {{flight1.business_fare}}
+                                        {% endif %}
+                                        </span>
+                                    <input type="hidden" id="basefare" value="{% if flight2 %}{{flight1.business_fare | add:flight2.business_fare}}{% else %}{{flight1.business_fare}}{% endif %}">
+                                {% elif seat == 'Economy' %}
+                                    ₹ <span>
+                                        {% if flight2 %}
+                                            {{flight1.economy_fare | add:flight2.economy_fare}}
+                                        {% else %}
+                                            {{flight1.economy_fare}}
+                                        {% endif %}
+                                    </span>
+                                    <input type="hidden" id="basefare" value="{% if flight2 %}{{flight1.economy_fare | add:flight2.economy_fare}}{% else %}{{flight1.economy_fare}}{% endif %}">
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="row surcharges">
+                            <div class="surcharges-label">Fee & Surcharges: </div>
+                            <div class="surcharges-value">₹ <span>{{fee}}</span></div>
+                            <input type="hidden" id="fee" value="{{fee}}">
+                        </div>
+                        <hr>
+                        <div class="total-fare">
+                            <div class="total-fare-label">Total Fare: </div>
+                            <div class="total-fare-value">
+                                {% if seat == 'First' %}
+                                    ₹ <span>
+                                        {% if flight2 %}
+                                            {{flight1.first_fare | add:flight2.first_fare | add:fee}}
+                                        {% else %}
+                                            {{flight1.first_fare | add:fee}}
+                                        {% endif %}
+                                    </span>
+                                {% elif seat == 'Business' %}
+                                    ₹ <span>
+                                        {% if flight2 %}
+                                            {{flight1.business_fare | add:flight2.business_fare | add:fee}}
+                                        {% else %}
+                                            {{flight1.business_fare | add:fee}}
+                                        {% endif %}
+                                    </span>
+                                {% elif seat == 'Economy' %}
+                                    ₹ <span>
+                                        {% if flight2 %}
+                                            {{flight1.economy_fare | add:flight2.economy_fare | add:fee}}
+                                        {% else %}
+                                            {{flight1.economy_fare | add:fee}}
+                                        {% endif %}
+                                        </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="coupon-code">
+                        <h5>Have a coupon code?</h5>
+                        <hr>
+                        <div class="row base-fare">
+                            <div class="col-9" style="padding: 10px 10px 10px 0px">
+                                <input type="text" name="coupon" class="form-control" placeholder="Coupon Code" style="text-transform: uppercase;">
+                            </div>
+                            <div class="col coupon-apply" style="padding: 10px 10px 10px 0px">
+                                <center>
+                                    <button type="button" class="btn btn-primary btn-danger">Apply</button>
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col media-payment-btn">
+                    <div>
+                        <button type="submit" class="btn btn-primary btn-danger">Proceed to payment</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </section>
+{% endblock %}
