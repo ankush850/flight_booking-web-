@@ -6,6 +6,7 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+AUTH_USER_MODEL = "flight.User"
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '=k3z-^1ov_hy5y%ebw(2e-npk@$#!(c8ix=+7so*hmw9m0c52*'
